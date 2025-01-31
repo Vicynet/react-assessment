@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+#Q1: State vs Props
+● Props: Immutable data passed from parent to child components (Akin to stateless
+widgets in Flutter)
+● State: Mutable data managed within a component, can change over time (Akin to
+stateful widgets in Flutter)
+// Props Example
+interface UserProps {
+name: string;
+age: number;
+}
+const UserDisplay = ({ name, age }) => {
+return (
+<div>{name} is {age} years old</div>
+)
+};
+// State Example
+const Counter = () => {
+const [count, setCount] = useState(0);
+return <button onClick={() => setCount(count + 1)}>{count}</button>;
+};
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#Q2: JSX
+JSX is a syntax extension for JavaScript that allows writing HTML-like code in React. It enables:
+● Declarative UI rendering
+● Embedding JavaScript expressions
+● Improved readability and component structure
+const element = <h1>Hello, {userName}</h1>;
 
-## Available Scripts
+#Q4: Lifting State Up
+Lifting state up involves moving shared state to a common ancestor component to manage and
+pass down as props, enabling state synchronization across components.
 
-In the project directory, you can run:
+const ParentComponent = () => {
+const [sharedState, setSharedState] = useState(initialValue);
+return (
+<>
+<ChildA state={sharedState} setState={setSharedState} />
+<ChildB state={sharedState} />
+</>
+);
+};
 
-### `npm start`
+#Q5: Context API
+Context allows data to be passed through the component tree without prop drilling.
+const ThemeContext = createContext({ theme: 'light', toggleTheme: () => {} });
+const ThemeProvider = ({ children }) => {
+const [theme, setTheme] = useState('light');
+const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
+return (
+<ThemeContext.Provider value={{ theme, toggleTheme }}>
+{children}
+</ThemeContext.Provider>
+);
+};
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#Q6: React Portals
+Portals allow rendering children into a different part of the DOM tree, which is useful for modals,
+tooltips, and floating elements.
+const Modal = ({ children }) => {
+return ReactDOM.createPortal(
+children,
+document.getElementById('modal-root')
+);
+};
